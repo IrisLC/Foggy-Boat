@@ -36,7 +36,7 @@ void AEnemySpawner::TrySpawnEnemies()
 	if (SpawnCheckValue == -1)
 	{
 		//Generates a Random number by getting a number between 1-20 based on real world time
-		SpawnCheckValue = 1 + FDateTime::Now().GetSecond() % 20;
+		SpawnCheckValue = 1 + FDateTime::UtcNow().GetSecond() % 20;
 	} else
 	{
 		SpawnCheckValue++;
