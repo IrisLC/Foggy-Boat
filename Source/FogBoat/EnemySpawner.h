@@ -23,10 +23,30 @@ protected:
 	virtual void BeginPlay() override;
 
 	CountdownTimer* SpawnCheckTimer;
+
+	/// <summary>
+	/// The time until the first spawn check occurs
+	/// </summary>
+	UPROPERTY(EditAnywhere, Category = "Parameters")
+	float TimeTillFirstSpawn = 60.f;
+	/// <summary>
+	/// The time between incrementing a missed SpawnValue
+	/// </summary>
+	UPROPERTY(EditAnywhere, Category = "Parameters")
+	float TimeForSpawnValueIncrease = 2.5f;
+	/// <summary>
+	/// The Time from an enemy being killed to another spawn check
+	/// </summary>
+	UPROPERTY(EditAnywhere, Category = "Parameters")
+	float TimeBetweenSpawns = 30.f;
 	
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, Category = "Parameters")
 	bool CanMultipleEnemies;
 	bool IsEnemySpawned;
+	/// <summary>
+	/// The number that must be hit or exceeded for an enemy to spawn
+	/// </summary>
+	UPROPERTY(EditAnywhere, Category = "Parameters")
 	int ToHitInt = 15;
 	int SpawnCheckValue = -1;
 	
@@ -41,8 +61,8 @@ protected:
 	
 	
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
 
 	void OnEnemyKilled();
+	UFUNCTION(BlueprintCallable)
+	void AddEnemyType();
 };

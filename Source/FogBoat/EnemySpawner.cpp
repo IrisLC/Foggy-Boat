@@ -10,7 +10,7 @@
 AEnemySpawner::AEnemySpawner()
 {
 
-	SpawnCheckTimer = new CountdownTimer(60.f);
+	SpawnCheckTimer = new CountdownTimer(TimeTillFirstSpawn);
 	SpawnCheckTimer->OnTimerStop.AddUObject(this, &AEnemySpawner::TrySpawnEnemies);
 	
 	//TODO: Fill out AllEnemyTypes;
@@ -43,27 +43,30 @@ void AEnemySpawner::TrySpawnEnemies()
 	}
 	
 	// An enemy will spawn when the CheckValue is equal to or above the To Hit value
-	// Otherwise reset the timer for 2.5 seconds and try again
+	// Otherwise reset the timer and try again
 	if (SpawnCheckValue >= ToHitInt)
 	{
 		SpawnEnemy();
 		SpawnCheckValue = -1;
 	} else
 	{
-		SpawnCheckTimer->Reset(2.5f);
+		SpawnCheckTimer->Reset(TimeForSpawnValueIncrease);
 	}
 }
 
 void AEnemySpawner::SpawnEnemy()
 {
-	//TODO: Add Enemy Spawning
+	//TODO: Make Parameters relative to Boat
 	
 	UClass* ClassToSpawn = AvailableEnemyTypes[0].GetObject()->GetClass();
+	
 	FVector SpawnLocation = FVector::ZeroVector;
 	FRotator SpawnRotation = FRotator::ZeroRotator;
+	
 	FActorSpawnParameters* SpawnParams = new FActorSpawnParameters();
 	SpawnParams->Name=TEXT("Mermaid");
 	IEnemyInterface* CreatedEnemy = GetWorld()->SpawnActor<IEnemyInterface>(ClassToSpawn, SpawnLocation, SpawnRotation, *SpawnParams);
+	
 	
 	IsEnemySpawned = true;
 	
@@ -72,15 +75,22 @@ void AEnemySpawner::SpawnEnemy()
 	
 }
 
-// Called every frame
-void AEnemySpawner::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-}
 
 void AEnemySpawner::OnEnemyKilled()
 {
 	IsEnemySpawned = false;
-	SpawnCheckTimer->Reset(30.f);
+	SpawnCheckTimer->Reset(TimeBetweenSpawns);
+}
+
+/// <summary>
+/// If there are still enemy types not in the AvailableEnemyTypes array, add the next one from the AllEnemyTypes array
+/// </summary>
+void AEnemySpawner::AddEnemyType()
+{
+	if (AllEnemyTypes.Num() != AvailableEnemyTypes.Num())
+	{
+		// The .Num of AvailableEnemyTypes will be equal to the index of the next enemy in AllEnemyTypes
+		AvailableEnemyTypes.Emplace(AllEnemyTypes[AvailableEnemyTypes.Num()]);
+	}
 }
 
