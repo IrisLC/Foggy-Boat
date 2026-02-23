@@ -22,4 +22,12 @@ class FOGBOAT_API IEnemyInterface
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
+	IEnemyInterface();
+	
+	DECLARE_MULTICAST_DELEGATE(EnemyKilledEvent);
+	EnemyKilledEvent EnemyKilled;
+protected:
+	int CreatureType = -1;
+	void OnSpawn();
+	void OnKilled() const;
 };

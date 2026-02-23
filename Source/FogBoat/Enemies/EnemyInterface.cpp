@@ -4,3 +4,16 @@
 #include "EnemyInterface.h"
 
 // Add default functionality here for any IEnemyInterface functions that are not pure virtual.
+IEnemyInterface::IEnemyInterface()
+{
+	
+}
+
+void IEnemyInterface::OnSpawn()
+{
+}
+
+void IEnemyInterface::OnKilled() const
+{
+	EnemyKilled.Broadcast();
+}
