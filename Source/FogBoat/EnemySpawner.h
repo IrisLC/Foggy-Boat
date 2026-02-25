@@ -59,6 +59,8 @@ protected:
 	void TrySpawnEnemies();
 	void SpawnEnemy();
 	
+	UPROPERTY()
+	AActor* PlayerBoat;
 	
 public:	
 

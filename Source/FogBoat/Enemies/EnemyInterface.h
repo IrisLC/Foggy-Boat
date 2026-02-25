@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "FogBoat/UtilityScripts/Timers.h"
 #include "UObject/Interface.h"
 #include "EnemyInterface.generated.h"
 
@@ -27,7 +28,13 @@ public:
 	DECLARE_MULTICAST_DELEGATE(EnemyKilledEvent);
 	EnemyKilledEvent EnemyKilled;
 protected:
+	/// <summary>
+	/// The timer for how long it takes for the attack to start
+	/// </summary>
+	CountdownTimer* AttackTimer;
+	CountdownTimer* KillTimer;
 	int CreatureType = -1;
+public:
 	void OnSpawn();
-	void OnKilled() const;
+	virtual void OnKilled();
 };

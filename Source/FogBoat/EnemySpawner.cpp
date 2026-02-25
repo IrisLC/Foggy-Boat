@@ -9,10 +9,8 @@
 // Sets default values
 AEnemySpawner::AEnemySpawner()
 {
-
 	SpawnCheckTimer = new CountdownTimer(TimeTillFirstSpawn);
-	SpawnCheckTimer->OnTimerStop.AddUObject(this, &AEnemySpawner::TrySpawnEnemies);
-	
+	SpawnCheckTimer->OnTimerStop.AddUFunction(this, GET_FUNCTION_NAME_CHECKED(AEnemySpawner, TrySpawnEnemies));
 	//TODO: Fill out AllEnemyTypes;
 	AllEnemyTypes.Add(AMermaid::StaticClass());
 }
@@ -26,6 +24,8 @@ void AEnemySpawner::BeginPlay()
 	{
 		AvailableEnemyTypes.Emplace(AllEnemyTypes[0]);
 	}
+	
+	SpawnCheckTimer->Start();
 }
 
 void AEnemySpawner::TrySpawnEnemies()
@@ -62,11 +62,23 @@ void AEnemySpawner::SpawnEnemy()
 	
 	FVector SpawnLocation = FVector::ZeroVector;
 	FRotator SpawnRotation = FRotator::ZeroRotator;
-	
 	FActorSpawnParameters* SpawnParams = new FActorSpawnParameters();
 	SpawnParams->Name=TEXT("Mermaid");
+	
+	if (PlayerBoat != nullptr)
+	{
+		SpawnLocation = PlayerBoat->GetActorLocation();
+		SpawnRotation = PlayerBoat->GetActorRotation();
+		
+	}
+	
 	IEnemyInterface* CreatedEnemy = GetWorld()->SpawnActor<IEnemyInterface>(ClassToSpawn, SpawnLocation, SpawnRotation, *SpawnParams);
 	
+	if (PlayerBoat != nullptr)
+	{
+		AActor* EnemyActor = Cast<AActor>(CreatedEnemy->_getUObject());
+		if (EnemyActor != nullptr) EnemyActor->AttachToActor(PlayerBoat, FAttachmentTransformRules::KeepRelativeTransform);
+	}
 	
 	IsEnemySpawned = true;
 	

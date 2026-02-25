@@ -13,7 +13,7 @@ void IEnemyInterface::OnSpawn()
 {
 }
 
-void IEnemyInterface::OnKilled() const
+void IEnemyInterface::OnKilled()
 {
 	EnemyKilled.Broadcast();
 }
