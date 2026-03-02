@@ -22,6 +22,10 @@ AMermaid::AMermaid()
 	RHandComp = CreateDefaultSubobject<USphereComponent>("Right Hand Collider");
 	RHandComp->SetupAttachment(RootComponent);
 	
+	BodyComp->SetCollisionProfileName(TEXT("Pawn"));
+	LHandComp->SetCollisionProfileName(TEXT("BlockAllDynamic"));
+	RHandComp->SetCollisionProfileName(TEXT("BlockAllDynamic"));
+	
 }
 
 // Called when the game starts or when spawned
