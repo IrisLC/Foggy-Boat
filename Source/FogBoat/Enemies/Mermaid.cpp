@@ -57,6 +57,9 @@ void AMermaid::OnHit(class UPrimitiveComponent* HitComponent, AActor* OtherActor
 		if (OtherActor->GetName() == "Oar")
 		{
 			//TODO: Check oar velocity
+			float ImpactSpeed = OtherComp->GetPhysicsLinearVelocityAtPoint(HitInfo.Location).Size();
+			
+			//if (ImpactSpeed > MinOarSpeed)
 			Health--;
 			return;
 		}
