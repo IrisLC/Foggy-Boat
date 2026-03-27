@@ -52,9 +52,6 @@ protected:
 	
 	IEnemyInterface* ActiveEnemy;
 	
-	TArray<TScriptInterface<IEnemyInterface>> AvailableEnemyTypes;
-	TArray<TScriptInterface<IEnemyInterface>> AllEnemyTypes;
-	
 	UFUNCTION()
 	void TrySpawnEnemies();
 	void SpawnEnemy();
@@ -62,6 +59,8 @@ protected:
 	UPROPERTY()
 	AActor* PlayerBoat;
 	
+	UPROPERTY(EditAnywhere, Category = "Enemies")
+	TSubclassOf<AActor> MermaidClass;
 public:	
 
 	void OnEnemyKilled();

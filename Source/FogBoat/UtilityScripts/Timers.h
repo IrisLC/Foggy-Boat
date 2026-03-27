@@ -7,7 +7,7 @@
 /**
  * 
  */
-class FOGBOAT_API FTimer
+class FOGBOAT_API FTimer : FTickableGameObject
 {
 public:
 	virtual ~FTimer();
@@ -37,7 +37,18 @@ public:
 
 	bool GetIsRunning() { return IsRunning; }
 
-	virtual void Tick(float DeltaTime) = 0;
+	virtual void Tick(float DeltaTime) override = 0;
+	// Override functions to control ticking
+	virtual TStatId GetStatId() const override
+	{
+		RETURN_QUICK_DECLARE_CYCLE_STAT(MyTickableObject, STATGROUP_Tickables);
+	}
+    
+	// You can override this to conditionally enable/disable ticking
+	virtual bool IsTickable() const override
+	{
+		return true; 
+	}
 };
 
 class CountdownTimer : public FTimer
