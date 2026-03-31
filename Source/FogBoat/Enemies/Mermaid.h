@@ -24,13 +24,15 @@ protected:
 	virtual void BeginPlay() override;
 	
 	UPROPERTY(EditDefaultsOnly)
-	int Health;
+	int Health = 5;
 	
 	UPROPERTY(EditAnywhere)
 	float TimeTillAttack = 15.f;
+	UPROPERTY(EditAnywhere)
 	float TimeTillDeath = 5.f;
 	
-	bool IsAttacking = false;
+	UPROPERTY(BlueprintReadOnly);
+	int AttackStage {0};
 	
 	UPROPERTY(EditAnywhere)
 	UCapsuleComponent* BodyComp;
@@ -38,6 +40,8 @@ protected:
 	USphereComponent* LHandComp;
 	UPROPERTY(EditAnywhere)
 	USphereComponent* RHandComp;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	USkeletalMeshComponent* Mesh;
 
 	UFUNCTION()
 	void Attack();

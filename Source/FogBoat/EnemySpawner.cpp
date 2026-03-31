@@ -2,6 +2,8 @@
 
 
 #include "EnemySpawner.h"
+
+#include "ToolBuilderUtil.h"
 #include "Enemies/EnemyInterface.h"
 #include "Enemies/Mermaid.h"
 
@@ -29,6 +31,8 @@ void AEnemySpawner::BeginPlay()
 	AMermaid* MC = Cast<AMermaid>(MermaidClass);
 	
 	check(MC->StaticClass() == AMermaid::StaticClass());
+	
+	
 }
 
 void AEnemySpawner::TrySpawnEnemies()
@@ -72,19 +76,34 @@ void AEnemySpawner::SpawnEnemy()
 	
 	FVector SpawnLocation = FVector::ZeroVector;
 	FRotator SpawnRotation = FRotator::ZeroRotator;
+	FVector SpawnScale = FVector::OneVector;
 	FActorSpawnParameters* SpawnParams = new FActorSpawnParameters();
 	SpawnParams->Name=TEXT("Mermaid");
 	
 	if (PlayerBoat != nullptr)
 	{
 		SpawnLocation = PlayerBoat->GetActorLocation();
-		SpawnRotation = PlayerBoat->GetActorRotation();
+		SpawnRotation.Yaw += PlayerBoat->GetActorRotation().Yaw;
+		
+		if (FDateTime::Now().GetSecond() % 2 == 0)
+		{
+			//Right side spawn
+			SpawnLocation += FVector(-70.f,-10.f,-20.f);
+			SpawnRotation.Yaw -= 90.f;
+		} else
+		{
+			//Right side spawn
+			SpawnLocation += FVector(70.f,-10.f,-20.f);
+			SpawnRotation.Yaw += 90.f;
+		}
+		
+
 	}
 	// Will be used to check for which kind of monster is being spawned later
 	AActor* CreatedEnemy;
 	if (true)
 	{
-		AMermaid* CreatedMermaid = GetWorld()->SpawnActor<AMermaid>(MermaidClass, SpawnLocation, SpawnRotation, *SpawnParams);
+		AMermaid* CreatedMermaid = GetWorld()->SpawnActor<AMermaid>(MermaidClass, SpawnLocation, SpawnRotation,  *SpawnParams);
 		CreatedEnemy = Cast<AActor>(CreatedMermaid);
 		ActiveEnemy = CreatedMermaid;
 	} 
@@ -93,7 +112,7 @@ void AEnemySpawner::SpawnEnemy()
 	
 	if (PlayerBoat != nullptr)
 	{
-		CreatedEnemy->AttachToActor(PlayerBoat, FAttachmentTransformRules::KeepRelativeTransform);
+		CreatedEnemy->AttachToActor(PlayerBoat, FAttachmentTransformRules::KeepWorldTransform);
 	}
 	
 	IsEnemySpawned = true;

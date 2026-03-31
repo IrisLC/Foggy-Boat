@@ -56,7 +56,7 @@ protected:
 	void TrySpawnEnemies();
 	void SpawnEnemy();
 	
-	UPROPERTY()
+	UPROPERTY(EditAnywhere, Category = "Parameters")
 	AActor* PlayerBoat;
 	
 	UPROPERTY(EditAnywhere, Category = "Enemies")
