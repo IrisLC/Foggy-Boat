@@ -61,6 +61,8 @@ void AMermaid::Kill()
 {
 	//TODO: Initiate Game over
 	UE_LOG(LogTemp, Warning, TEXT("Game Over"));
+	
+	EndGame = true;
 }
 
 void AMermaid::OnHit(class UPrimitiveComponent* HitComponent, AActor* OtherActor, class UPrimitiveComponent* OtherComp,
@@ -113,6 +115,7 @@ void AMermaid::OnKilled()
 	KillTimer->Stop();
 	
 	//TODO: Play death animation and destroy enemy
+	
 }
 
 

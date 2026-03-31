@@ -31,6 +31,9 @@ protected:
 	UPROPERTY(EditAnywhere)
 	float TimeTillDeath = 5.f;
 	
+	UPROPERTY(BlueprintReadOnly)
+	bool EndGame;
+	
 	UPROPERTY(BlueprintReadOnly);
 	int AttackStage {0};
 	
