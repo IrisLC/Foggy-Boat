@@ -3,7 +3,6 @@
 
 #include "EnemySpawner.h"
 
-#include "ToolBuilderUtil.h"
 #include "Enemies/EnemyInterface.h"
 #include "Enemies/Mermaid.h"
 

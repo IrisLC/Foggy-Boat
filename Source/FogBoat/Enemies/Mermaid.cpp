@@ -71,10 +71,10 @@ void AMermaid::OnHit(class UPrimitiveComponent* HitComponent, AActor* OtherActor
 	//TODO: Make sure this works properly when the oar and flare are implemented
 	if (AttackStage != 2)
 	{
-		if (OtherActor->GetName() == "Oar")
+		if (OtherActor->GetName() == "BP_Oar")
 		{
 			//TODO: Check oar velocity
-			float ImpactSpeed = OtherComp->GetPhysicsLinearVelocityAtPoint(HitInfo.Location).Size();
+			//float ImpactSpeed = OtherComp->GetPhysicsLinearVelocityAtPoint(HitInfo.Location).Size();
 			
 			//if (ImpactSpeed > MinOarSpeed)
 			Health--;
