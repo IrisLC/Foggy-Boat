@@ -114,10 +114,10 @@ void AEnemySpawner::SpawnEnemy()
 	{
 		if (FDateTime::Now().GetSecond() % 2 == 0)
 		{
-			CreatedEnemy->AddActorLocalOffset(FVector(-60.f,-40.f,-20.f));
+			CreatedEnemy->AddActorLocalOffset(FVector(-30.f,-40.f,-20.f));
 		} else
 		{
-			CreatedEnemy->AddActorLocalOffset(FVector(-50.f,-60.f,45.f));
+			CreatedEnemy->AddActorLocalOffset(FVector(-50.f,-60.f,20.f));
 		}
 		
 		CreatedEnemy->AttachToActor(PlayerBoat, FAttachmentTransformRules::KeepWorldTransform);
