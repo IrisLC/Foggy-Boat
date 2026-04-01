@@ -79,6 +79,7 @@ void AEnemySpawner::SpawnEnemy()
 	FVector SpawnScale = FVector::OneVector;
 	FActorSpawnParameters* SpawnParams = new FActorSpawnParameters();
 	SpawnParams->Name=TEXT("Mermaid");
+	SpawnParams->SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 	
 	if (PlayerBoat != nullptr)
 	{
