@@ -88,12 +88,12 @@ void AEnemySpawner::SpawnEnemy()
 		if (FDateTime::Now().GetSecond() % 2 == 0)
 		{
 			//Right side spawn
-			SpawnLocation += FVector(-70.f,-10.f,-20.f);
+			UE_LOG(LogTemp, Warning, TEXT("Right"));
 			SpawnRotation.Yaw -= 90.f;
 		} else
 		{
 			//Right side spawn
-			SpawnLocation += FVector(70.f,-10.f,-20.f);
+			UE_LOG(LogTemp, Warning, TEXT("Left"));
 			SpawnRotation.Yaw += 90.f;
 		}
 		
@@ -112,7 +112,16 @@ void AEnemySpawner::SpawnEnemy()
 	
 	if (PlayerBoat != nullptr)
 	{
+		if (FDateTime::Now().GetSecond() % 2 == 0)
+		{
+			CreatedEnemy->AddActorLocalOffset(FVector(-60.f,-40.f,-20.f));
+		} else
+		{
+			CreatedEnemy->AddActorLocalOffset(FVector(-50.f,-60.f,45.f));
+		}
+		
 		CreatedEnemy->AttachToActor(PlayerBoat, FAttachmentTransformRules::KeepWorldTransform);
+		
 	}
 	
 	IsEnemySpawned = true;
